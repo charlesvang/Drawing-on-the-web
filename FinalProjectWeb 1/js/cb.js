@@ -2,21 +2,18 @@ var camera,mirrorCamera, scene, renderer, controls;
 var geometry, material, mesh;
 var arr=[];
 var arr1 = [];
+var arr2 = [];
 function init() {
   scene = new THREE.Scene();
   var width = window.innerWidth;
   var height = window.innerHeight;
 
-  camera = new THREE.PerspectiveCamera(45, width/height, 0.1, 25000);
+  camera = new THREE.PerspectiveCamera(45, width/height, 0.1, 125000);
   camera.position.set(0, 300, 700);
   scene.add(camera);
 
-  var spotlight = new THREE.SpotLight(0xffffff);
-  spotlight.position.set(100, 4000, 4000);
 
-  scene.add(spotlight);
-
-  mirrorCamera = new THREE.CubeCamera(0.1, 8000, 512);
+  mirrorCamera = new THREE.CubeCamera(0.1, 120000, 512);
 
   scene.add(mirrorCamera);
 
@@ -24,11 +21,11 @@ function init() {
 
   var loader = new THREE.JSONLoader();
   loader.load('js/spaceship.json', function(mgeometry){
-  for (var object = 0; object < 25; object ++){
+  for (var object = 0; object < 50; object ++){
 
   var modelMesh = new THREE.Mesh(mgeometry, material1);
             modelMesh.scale.set(25, 25, 25);
-            modelMesh.position.x = (Math.random() - 0.6) * 5000;
+            modelMesh.position.x = (Math.random() - 0.6) * 6000;
             modelMesh.position.y = (Math.random() - 0.6) * 5000;
             modelMesh.position.z = (Math.random() - 0.6) * 5000;
             arr.push(modelMesh);
@@ -49,6 +46,23 @@ function init() {
             scene.add(modelMesh);}
 
     });
+
+
+  var mothershiploader = new THREE.JSONLoader();
+    mothershiploader.load('js/mothership.json', function(mgeometry){
+    for (var object = 0; object < 1; object ++){
+
+    var modelMesh = new THREE.Mesh(mgeometry, material1);
+              modelMesh.scale.set(500, 500, 500);
+              modelMesh.position.x = -5000;
+              modelMesh.position.y = -5000;
+              modelMesh.position.z = -5000;
+              arr2.push(modelMesh);
+              scene.add(modelMesh);}
+
+      });
+
+
 
 
   // skybox files
@@ -75,11 +89,13 @@ function init() {
     side: THREE.BackSide
   });
 
-  var geometry = new THREE.BoxGeometry(8000, 8000, 8000);
+  var geometry = new THREE.BoxGeometry(120000, 120000, 120000);
 
   var mesh = new THREE.Mesh(geometry, material);
 
   scene.add(mesh);
+
+
 
 
 
@@ -99,11 +115,16 @@ function animate() {
   renderer.render(scene, camera);
   controls.update();
   for(var i=0;i <arr.length;i++){
-    arr[i].position.x -= 1.5 ;
+    arr[i].position.x -= 15 ;
   }
 
+
   for (var i= 0; i < arr1.length; i++){
-    arr1[i].position.x -= 0.3;
+    arr1[i].position.x -= 9;
+  }
+
+  for (var i= 0; i < arr2.length; i++){
+    arr2[i].position.x -= 5;
   }
 
 
